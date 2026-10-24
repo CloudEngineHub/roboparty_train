@@ -1,0 +1,69 @@
+[project]
+name = "roboparty-train"
+version = "0.1.0"
+description = "RoboParty training workspace for Isaac Lab 3.0."
+requires-python = ">=3.12,<3.13"
+dependencies = ["isaaclab-dev", "robolab", "rsl-rl-lib==5.5.1"]
+
+[project.optional-dependencies]
+physx = ["isaaclab-dev[isaacsim]"]
+tools = ["robolab[tools]"]
+video = ["isaaclab-dev[video]"]
+wandb = ["rsl-rl-lib[wandb]"]
+
+[dependency-groups]
+mjwarp = ["isaaclab-dev[importers]"]
+
+[tool.uv]
+package = false
+default-groups = ["mjwarp"]
+index-strategy = "unsafe-best-match"
+prerelease = "allow"
+environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
+# Path-based editables avoid checkout directories shadowing their Python packages.
+config-settings-package = { robolab = { editable_mode = "compat" }, rsl-rl-lib = { editable_mode = "compat" } }
+# Match Isaac Lab GA's dependency overrides, retaining this workspace's CUDA 12.8 stack.
+override-dependencies = [
+    "numpy>=2",
+    "mujoco~=3.12.0",
+    "mujoco-warp~=3.12.0",
+    "newton[sim]==1.6.1",
+    "newton-usd-schemas>=0.5.0",
+    "usd-exchange==3.0.1",
+    "usd-optimize~=1.3.1",
+    "torch==2.11.0",
+    "torchvision==0.26.0",
+    "torchaudio==2.11.0",
+    "fsspec>=2026.6.0",
+    "packaging>=20,<27",
+    "urllib3>=2.8.0",
+]
+
+[tool.uv.sources]
+robolab = { path = "robolab", editable = true }
+rsl-rl-lib = { path = "rsl_rl", editable = true }
+isaaclab-dev = { path = "../IsaacLab-3.0.0", editable = true }
+isaaclab = { path = "../IsaacLab-3.0.0/source/isaaclab", editable = true }
+isaaclab-assets = { path = "../IsaacLab-3.0.0/source/isaaclab_assets", editable = true }
+isaaclab-contrib = { path = "../IsaacLab-3.0.0/source/isaaclab_contrib", editable = true }
+isaaclab-experimental = { path = "../IsaacLab-3.0.0/source/isaaclab_experimental", editable = true }
+isaaclab-newton = { path = "../IsaacLab-3.0.0/source/isaaclab_newton", editable = true }
+isaaclab-ov = { path = "../IsaacLab-3.0.0/source/isaaclab_ov", editable = true }
+isaaclab-physx = { path = "../IsaacLab-3.0.0/source/isaaclab_physx", editable = true }
+isaaclab-ppisp = { path = "../IsaacLab-3.0.0/source/isaaclab_ppisp", editable = true }
+isaaclab-rl = { path = "../IsaacLab-3.0.0/source/isaaclab_rl", editable = true }
+isaaclab-tasks = { path = "../IsaacLab-3.0.0/source/isaaclab_tasks", editable = true }
+isaaclab-tasks-experimental = { path = "../IsaacLab-3.0.0/source/isaaclab_tasks_experimental", editable = true }
+isaaclab-visualizers = { path = "../IsaacLab-3.0.0/source/isaaclab_visualizers", editable = true }
+torch = { index = "pytorch-cu128" }
+torchvision = { index = "pytorch-cu128" }
+torchaudio = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+url = "https://pypi.nvidia.com"
+explicit = false
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true

@@ -1,4 +1,10 @@
 *.egg-info
+.venv/
+.venv-physx/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+/policy.pt
 *.pyc
 .vscode
 outputs
